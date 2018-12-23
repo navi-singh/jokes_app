@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider as MobXProvider } from 'mobx-react/native';
 import LandingPage from './src/LandingPage';
-import observableJokesStore from './src/store/JokeStore';
+import store from './src/store/JokeStore';
 import { auth } from './src/store/Firestore';
 
 class App extends React.Component {
@@ -23,7 +23,7 @@ class App extends React.Component {
   render() {
     const { loggedIn } = this.state;
     return (
-      <MobXProvider store={observableJokesStore}>
+      <MobXProvider store={store}>
         <View style={styles.container}>
           <Text>{loggedIn}</Text>
           <LandingPage />
