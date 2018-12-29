@@ -12,6 +12,10 @@ class JokeStore {
 
   @observable jokeCategory = null;
 
+  @observable firstJokeId = null;
+
+  jokeId = null;
+
   constructor() {
     this.index = 0;
   }
@@ -27,18 +31,32 @@ class JokeStore {
     }
   }
 
-  updateCurrentJoke() {
-    const currentJoke = this.jokes[this.index];
+  @action
+  previousJoke() {
+    this.isReady = false;
+    if (!this.jokes || this.index <= 1) {
+      this.fetchJokes();
+    } else {
+      this.updateCurrentJoke();
+      this.isReady = true;
+    }
+  }
+
+  updateCurrentJoke(indexDeltaIfPrevious) {
+    const currentJoke = this.jokes[this.index - (indexDeltaIfPrevious || 0)];
     this.currentJoke = currentJoke;
+    // console.log(`${this.jokes.length} -- ${this.index} ++ ${this.jokes[0].body}`);
     this.jokeBody = currentJoke.body;
     this.jokeCategory = currentJoke.category;
-    this.index += 1;
+    this.jokeId = currentJoke.id;
+    this.index = this.index + 1 - (indexDeltaIfPrevious || 0);
   }
 
   fetchJokes() {
     this.jokes = [];
     this.index = 0;
     const minimumJokeId = this.currentJoke ? this.currentJoke.id : 0;
+    console.log('fetching');
     fireStore.collection('1').where('id', '>', minimumJokeId).limit(10).get()
       .then((query) => {
         query.forEach((doc) => {
@@ -46,7 +64,7 @@ class JokeStore {
         });
         this.updateCurrentJoke();
         this.isReady = true;
-        console.log('fetching');
+        console.log('fetched');
       })
       .catch((error) => {
         console.log(`Error getting doc ${error}`);

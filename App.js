@@ -1,6 +1,7 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import { Provider as MobXProvider } from 'mobx-react/native';
+import { Root } from 'native-base';
 import LandingPage from './src/LandingPage';
 import store from './src/store/JokeStore';
 import { auth } from './src/store/Firestore';
@@ -23,12 +24,14 @@ class App extends React.Component {
   render() {
     const { loggedIn } = this.state;
     return (
-      <MobXProvider store={store}>
-        <View style={styles.container}>
-          <Text>{loggedIn}</Text>
-          <LandingPage />
-        </View>
-      </MobXProvider>
+      <Root>
+        <MobXProvider store={store}>
+          <View style={styles.container}>
+            <Text>{loggedIn}</Text>
+            <LandingPage />
+          </View>
+        </MobXProvider>
+      </Root>
     );
   }
 }
