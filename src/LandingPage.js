@@ -3,14 +3,8 @@ import {
 } from 'react-native';
 import React from 'react';
 import { observer, inject } from 'mobx-react';
-// import { Icon } from 'native-base';
-// import { Ionicons } from '@expo/vector-icons';
 import { Icon, Font } from 'expo';
 import { Button, Toast } from 'native-base';
-// import PropTypes from 'prop-types';
-// import Loader from './Loader';
-
-const NEXT = 'next';
 
 @inject('store')
 @observer
@@ -56,7 +50,6 @@ class LandingPage extends React.Component {
             <Text style={[styles.category, { flex: 3 }]}>{store.jokeCategory}</Text>
           </View>
           <Text style={styles.joke}>{store.jokeBody}</Text>
-          <Text style={styles.joke}>{store.jokeId}</Text>
           <View style={styles.buttonHolder}>
             <Button size={48} style={styles.button} onPress={this.constructor.favoritesToast} transparent>
               <Icon.Ionicons name="md-home" size={40} style={styles.buttonIcon} />
@@ -102,15 +95,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   category: {
-    // justifyContent: 'flex-start',
+    color: '#ffffff',
   },
   buttonHolder: {
     flex: 1,
-    // alignSelf: 'baseline',
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    // backgroundColor: '#0cadf2',
+    backgroundColor: '#1565C0',
+    borderRadius: 6,
     marginBottom: 15,
   },
   button: {
