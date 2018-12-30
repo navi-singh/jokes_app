@@ -1,10 +1,19 @@
 import {
-  StyleSheet, View, Text,
+  StyleSheet, View, ScrollView, Text,
 } from 'react-native';
 import React from 'react';
 import { observer, inject } from 'mobx-react';
 import { Icon, Font } from 'expo';
 import { Button, Toast } from 'native-base';
+
+const HEADER_COLOR = [
+  '#1565C0',
+  '#f44242',
+];
+const BACKGROUND_COLOR = [
+  '#dbe8ff',
+  '#ffe8e8',
+];
 
 @inject('store')
 @observer
@@ -19,6 +28,7 @@ class LandingPage extends React.Component {
 
   async componentWillMount() {
     const { store } = this.props;
+    this.rand = Math.floor(0 + Math.random() * (2));
     store.nextJoke();
     /* eslint-disable */
     await Font.loadAsync({
@@ -42,15 +52,19 @@ class LandingPage extends React.Component {
     const { store } = this.props;
     if (store.isReady) {
       return (
-        <View style={styles.container}>
-          <View style={styles.buttonHolder}>
+        <View style={[styles.container, { backgroundColor: BACKGROUND_COLOR[this.rand] }]}>
+          <View style={[styles.buttonHolder, { backgroundColor: HEADER_COLOR[this.rand] }]}>
             <Button size={48} style={[styles.button, { flex: 1 }]} onPress={this.constructor.favoritesToast} transparent>
               <Icon.Ionicons name="md-arrow-back" size={40} style={styles.buttonIcon} />
             </Button>
             <Text style={[styles.category, { flex: 3 }]}>{store.jokeCategory}</Text>
           </View>
-          <Text style={styles.joke}>{store.jokeBody}</Text>
-          <View style={styles.buttonHolder}>
+          <ScrollView style={styles.jokeBody}>
+            <View>
+              <Text style={styles.joke}>{store.jokeBody}</Text>
+            </View>
+          </ScrollView>
+          <View style={[styles.buttonHolder, { backgroundColor: HEADER_COLOR[this.rand] }]}>
             <Button size={48} style={styles.button} onPress={this.constructor.favoritesToast} transparent>
               <Icon.Ionicons name="md-home" size={40} style={styles.buttonIcon} />
             </Button>
@@ -63,8 +77,7 @@ class LandingPage extends React.Component {
               <Icon.Ionicons name="ios-star-outline" size={40} style={styles.buttonIcon} />
             </Button>
             <Button size={48} style={styles.button} onPress={this.previous} transparent>
-              {/* { if(store.joke) */}
-              <Icon.Ionicons name="md-arrow-dropleft-circle" size={40} style={styles.buttonIcon} />
+              <Icon.Ionicons name="md-arrow-dropleft-circle" size={40} style={styles.buttonIcon} disabled={false} />
             </Button>
             <Button size={48} style={styles.button} onPress={this.next} transparent>
               <Icon.Ionicons name="md-arrow-dropright-circle" size={40} style={styles.buttonIcon} />
@@ -84,25 +97,29 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     alignItems: 'center',
     padding: 20,
-    backgroundColor: '#dbe8ff',
+    // backgroundColor: '#dbe8ff',
+    backgroundColor: '#ffe8e8',
   },
-  header: {
-    flex: 1,
+  jokeBody: {
+    flex: 0.9,
   },
   joke: {
-    flex: 14,
+    fontSize: 14,
     fontFamily: 'Roboto_medium',
-    justifyContent: 'center',
   },
   category: {
     color: '#ffffff',
+    fontSize: 20,
+    fontWeight: 'bold',
+    fontFamily: 'Roboto_medium',
   },
   buttonHolder: {
-    flex: 1,
+    flex: 0.075,
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    backgroundColor: '#1565C0',
+    // backgroundColor: '#1565C0',
+    // backgroundColor: '#f44242',
     borderRadius: 6,
     marginBottom: 15,
   },
