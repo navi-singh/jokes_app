@@ -52,14 +52,15 @@ class LandingPage extends React.Component {
     const { store } = this.props;
     if (store.isReady) {
       return (
-        <View style={[styles.container, { backgroundColor: BACKGROUND_COLOR[this.rand] }]}>
+        <View style={[styles.container, { backgroundColor: BACKGROUND_COLOR[1] }]}>
+
           <View style={[styles.buttonHolder, { backgroundColor: HEADER_COLOR[this.rand] }]}>
             <Button size={48} style={[styles.button, { flex: 1 }]} onPress={this.constructor.favoritesToast} transparent>
               <Icon.Ionicons name="md-arrow-back" size={40} style={styles.buttonIcon} />
             </Button>
             <Text style={[styles.category, { flex: 3 }]}>{store.jokeCategory}</Text>
           </View>
-          <ScrollView style={styles.jokeBody}>
+          <ScrollView style={styles.jokeBody} showsVerticalScrollIndicator={false}>
             <View>
               <Text style={styles.joke}>{store.jokeBody}</Text>
             </View>

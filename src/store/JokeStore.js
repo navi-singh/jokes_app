@@ -57,7 +57,7 @@ class JokeStore {
     this.index = 0;
     const minimumJokeId = this.currentJoke ? this.currentJoke.id : 0;
     console.log('fetching');
-    fireStore.collection('1').where('id', '>', minimumJokeId).limit(10).get()
+    fireStore.collection('2').where('id', '>', minimumJokeId).limit(10).get()
       .then((query) => {
         query.forEach((doc) => {
           this.jokes.push(doc.data());
